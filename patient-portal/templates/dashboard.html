@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Patient Dashboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+
+        .header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .content {
+            margin-top: 2rem;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Welcome to Your Health Dashboard</h1>
+    </div>
+    <div class="content">
+        <div class="card">
+            <h3>Upcoming Appointments</h3>
+            <p>No upcoming appointments.</p>
+            <form action="/appointment" method="POST">
+                <input type="date" name="date">
+                <input type="text" name="reason" placeholder="Reason for visit">
+                <button>Schedule</button>
+            </form>
+        </div>
+        <div class="card">
+            <h3>Recent Lab Results</h3>
+            <p><a href="#">Blood Work - 2025-11-20</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

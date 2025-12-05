@@ -1,0 +1,246 @@
+services:
+  # OpenEMR Application (Production)
+  openemr:
+    image: openemr/openemr:latest
+    container_name: openemr
+    ports:
+      - "8080:80"
+      - "8443:443"
+    environment:
+      OE_MYSQL_HOST: openemr-db
+      OE_MYSQL_USER: ${MYSQL_USER}
+      OE_MYSQL_PASS: ${MYSQL_PASSWORD}
+      OE_MYSQL_DB: ${MYSQL_DATABASE}
+      FORCE_HTTPS: ${ENABLE_TLS}
+    depends_on:
+      openemr-db:
+        condition: service_healthy
+    volumes:
+      - openemr_data:/var/www/localhost/htdocs
+      - openemr_logs:/var/log/openemr
+      - ./certs/openemr.crt:/etc/ssl/certs/openemr.crt:ro
+      - ./certs/openemr.key:/etc/ssl/private/openemr.key:ro
+    networks:
+      - hospitalnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILES}"
+
+  # OpenEMR Database (Production)
+  openemr-db:
+    image: mariadb:10.6
+    container_name: openemr-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - openemr_db:/var/lib/mysql
+      - ./mysql-config/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    networks:
+      - hospitalnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILES}"
+
+  # Orthanc PACS (Production)
+  orthanc:
+    image: orthancteam/orthanc:latest
+    container_name: orthanc
+    ports:
+      - "8042:8042"
+      - "4242:4242"
+    environment:
+      ORTHANC__Name: ${ORTHANC_NAME}
+      ORTHANC__DicomAet: ${ORTHANC_AET}
+      ORTHANC__DicomPort: ${ORTHANC_DICOM_PORT}
+      ORTHANC__AuthenticationEnabled: "true"
+      ORTHANC__RegisteredUsers__${ORTHANC_USERNAME}: ${ORTHANC_PASSWORD}
+      ORTHANC__RemoteAccessAllowed: "true"
+      ORTHANC__SslEnabled: ${ENABLE_TLS}
+      ORTHANC__HttpsCertificate: "/etc/ssl/certs/orthanc.crt"
+      ORTHANC__HttpsKey: "/etc/ssl/private/orthanc.key"
+    volumes:
+      - orthanc_data:/var/lib/orthanc/db
+      - orthanc_logs:/var/log/orthanc
+      - ./certs/orthanc.crt:/etc/ssl/certs/orthanc.crt:ro
+      - ./certs/orthanc.key:/etc/ssl/private/orthanc.key:ro
+      - ./orthanc-config/orthanc.json:/etc/orthanc/orthanc.json:ro
+    networks:
+      - hospitalnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8042/system"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILES}"
+
+  # Velociraptor EDR Server (Production)
+  velociraptor:
+    image: wlambert/velociraptor:latest
+    container_name: velociraptor-server
+    ports:
+      - "${VELOCIRAPTOR_GUI_PORT:-8888}:8000"
+      - "${VELOCIRAPTOR_FRONTEND_PORT:-8001}:8001"
+    volumes:
+      - velociraptor_config:/config
+      - velociraptor_data:/data
+      - velociraptor_logs:/logs
+      # Mount container volumes for monitoring (read-only)
+      - openemr_data:/monitor/openemr:ro
+      - openemr_logs:/monitor/openemr_logs:ro
+      - orthanc_data:/monitor/orthanc:ro
+      - orthanc_logs:/monitor/orthanc_logs:ro
+    networks:
+      - hospitalnet
+    restart: unless-stopped
+
+
+    command: ["frontend", "-c", "/config/server.config.yaml"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-k", "https://localhost:8000/"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILES}"
+
+  # Nginx Reverse Proxy (Production)
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./certs:/etc/nginx/certs:ro
+      - nginx_logs:/var/log/nginx
+    networks:
+      - hospitalnet
+    depends_on:
+      - openemr
+      - orthanc
+      - velociraptor
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILES}"
+
+volumes:
+  openemr_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/hospital/openemr_db
+  openemr_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/hospital/openemr_data
+  openemr_logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/hospital/openemr_logs
+  orthanc_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/hospital/orthanc_data
+  orthanc_logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/hospital/orthanc_logs
+  velociraptor_config:
+    driver: local
+  velociraptor_data:
+    driver: local
+  velociraptor_logs:
+  portainer_data:
+    driver: local
+  nginx_logs:
+    driver: local
+
+networks:
+  hospitalnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${HOSPITAL_NETWORK_SUBNET}
+    driver_opts:
+      com.docker.network.bridge.name: br-hospital

@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Patient Portal (Internal Web App)
+  patient-portal:
+    build: ./patient-portal
+    container_name: patient-portal
+    expose:
+      - "5000"
+    volumes:
+      - ./patient-portal:/app
+    networks:
+      - dmz_net
+    restart: unless-stopped
+
+  # DMZ Reverse Proxy
+  nginx-dmz:
+    image: nginx:latest
+    container_name: nginx-dmz
+    volumes:
+      - ./dmz/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8088:80" # Exposed to host/WAN (Changed to 8088 to avoid local Apache conflict)
+    networks:
+      - dmz_net
+    depends_on:
+      - patient-portal
+    restart: unless-stopped
+
+networks:
+  dmz_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
+    driver_opts:
+      com.docker.network.bridge.name: br-dmz

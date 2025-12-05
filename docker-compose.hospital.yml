@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # OpenEMR Application
+  openemr:
+    image: openemr/openemr:latest
+    container_name: openemr
+    ports:
+      - "8085:80"
+    environment:
+      OE_MYSQL_HOST: openemr-db
+      OE_MYSQL_USER: openemr
+      OE_MYSQL_PASS: openemr
+      OE_MYSQL_DB: openemr
+    depends_on:
+      - openemr-db
+    volumes:
+      - openemr_data:/var/www/localhost/htdocs
+      - openemr_logs:/var/log/openemr
+    networks:
+      - hospitalnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # OpenEMR Database
+  openemr-db:
+    image: mariadb:10.6
+    container_name: openemr-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: openemr
+      MYSQL_PASSWORD: openemr
+    volumes:
+      - openemr_db:/var/lib/mysql
+    networks:
+      - hospitalnet
+    restart: unless-stopped
+
+  # Orthanc PACS
+  orthanc:
+    image: orthancteam/orthanc:latest
+    container_name: orthanc
+    ports:
+      - "8042:8042"
+    environment:
+      ORTHANC__NAME: "HospitalPACS"
+      ORTHANC__DICOM_AET: "ORTHANC"
+      ORTHANC__DICOM_PORT: 4242
+      ORTHANC__AUTHENTICATION_ENABLED: "true"
+      ORTHANC__REGISTERED_USERS: '{"admin": "admin"}'
+    volumes:
+      - orthanc_data:/var/lib/orthanc/db
+      - orthanc_logs:/var/log/orthanc
+    networks:
+      - hospitalnet
+    restart: unless-stopped
+
+  # Velociraptor EDR Server (Commented out per user request)
+  #velociraptor:
+  #  image: wlambert/velociraptor:latest
+  #  container_name: velociraptor-server
+  #  ports:
+  #    - "8888:8000"  # GUI
+  #    - "8001:8001"  # Frontend
+  #  volumes:
+  #    - ./velociraptor-config/server.config.yaml:/velociraptor/server.config.yaml
+  #    - velociraptor_data:/data
+  #    - velociraptor_logs:/logs
+  #  networks:
+  #    - hospitalnet
+  #  restart: unless-stopped
+
+volumes:
+  openemr_db:
+  openemr_data:
+  openemr_logs:
+  orthanc_data:
+  orthanc_logs:
+  velociraptor_data:
+  velociraptor_logs:
+
+networks:
+  hospitalnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.60.0/24
+    driver_opts:
+      com.docker.network.bridge.name: br-hospital

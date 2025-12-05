@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Cowrie SSH/Telnet Honeypot
+  cowrie:
+    image: cowrie/cowrie:latest
+    container_name: honeynet-cowrie
+    ports:
+      - "2222:2222" # SSH (Forward 22 -> 2222 on host firewall if desired)
+      - "2223:2223" # Telnet
+    volumes:
+      - cowrie_data:/cowrie/var
+    networks:
+      - honeynet
+    restart: unless-stopped
+
+  # Dionaea Malware Honeypot
+  dionaea:
+    image: dinotools/dionaea:latest
+    container_name: honeynet-dionaea
+    ports:
+      - "21:21"   # FTP
+      - "42:42"   # WINS
+      - "135:135" # MSRPC
+      - "443:443" # HTTPS
+      - "445:445" # SMB
+      - "1433:1433" # MSSQL
+      - "3306:3306" # MySQL
+      - "5060:5060" # SIP
+      - "5061:5061" # SIP-TLS
+    networks:
+      - honeynet
+    restart: unless-stopped
+
+  # Mailhog SMTP Honeypot
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: honeynet-mailhog
+    ports:
+      - "2525:1025" # SMTP (Forward 25 on host to 2525)
+      - "8025:8025" # Web UI
+    networks:
+      - honeynet
+    restart: unless-stopped
+
+networks:
+  honeynet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.122.0/24
+    driver_opts:
+      com.docker.network.bridge.name: br-honeynet
+
+volumes:
+  cowrie_data:

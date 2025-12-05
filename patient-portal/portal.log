@@ -1,0 +1,62 @@
+2025-12-03 12:55:35,307 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.25.0.7:5000
+2025-12-03 12:55:35,308 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-03 12:58:09,784 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.25.0.2:5000
+2025-12-03 12:58:09,785 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-03 12:59:02,722 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.25.0.2:5000
+2025-12-03 12:59:02,724 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-03 13:00:07,373 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.25.0.3:5000
+2025-12-03 13:00:07,373 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-03 13:57:11,367 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.28.0.5:5000
+2025-12-03 13:57:11,367 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-03 14:55:19,615 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.28.0.4:5000
+2025-12-03 14:55:19,616 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-03 15:06:29,781 - INFO - Page View: Index - IP: 172.28.0.1
+2025-12-03 15:06:29,795 - INFO - 172.28.0.1 - - [03/Dec/2025 15:06:29] "GET / HTTP/1.1" 200 -
+2025-12-03 15:06:29,801 - INFO - Page View: Index - IP: 172.28.0.1
+2025-12-03 15:06:29,802 - INFO - 172.28.0.1 - - [03/Dec/2025 15:06:29] "GET / HTTP/1.1" 200 -
+2025-12-03 15:06:30,799 - INFO - 172.28.0.1 - - [03/Dec/2025 15:06:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-12-03 15:06:30,803 - INFO - 172.28.0.1 - - [03/Dec/2025 15:06:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-12-03 15:06:30,807 - INFO - 172.28.0.1 - - [03/Dec/2025 15:06:30] "GET /login HTTP/1.1" 200 -
+2025-12-03 15:06:30,811 - INFO - 172.28.0.1 - - [03/Dec/2025 15:06:30] "GET /login HTTP/1.1" 200 -
+2025-12-05 08:56:20,904 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.28.0.2:5000
+2025-12-05 08:56:20,907 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-05 13:54:33,855 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.28.0.2:5000
+2025-12-05 13:54:33,857 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-05 13:56:48,760 - INFO - Page View: Index - IP: 172.28.0.1
+2025-12-05 13:56:48,770 - INFO - 172.28.0.1 - - [05/Dec/2025 13:56:48] "GET / HTTP/1.1" 200 -
+2025-12-05 13:56:49,898 - INFO - 172.28.0.1 - - [05/Dec/2025 13:56:49] "GET /login HTTP/1.1" 200 -
+2025-12-05 14:51:55,194 - INFO - Page View: Index - IP: 172.28.0.1
+2025-12-05 14:51:55,211 - INFO - 172.28.0.1 - - [05/Dec/2025 14:51:55] "GET / HTTP/1.1" 200 -
+2025-12-05 14:51:55,220 - INFO - Page View: Index - IP: 172.28.0.1
+2025-12-05 14:51:55,233 - INFO - 172.28.0.1 - - [05/Dec/2025 14:51:55] "GET / HTTP/1.1" 200 -
+2025-12-05 14:51:56,103 - INFO - 172.28.0.1 - - [05/Dec/2025 14:51:56] "GET /login HTTP/1.1" 200 -
+2025-12-05 14:51:56,147 - INFO - 172.28.0.1 - - [05/Dec/2025 14:51:56] "GET /login HTTP/1.1" 200 -
+2025-12-05 16:07:58,452 - INFO - Page View: Index - IP: 192.168.20.3
+2025-12-05 16:09:07,450 - INFO - Page View: Index - IP: 192.168.20.3
+2025-12-05 16:15:57,278 - INFO - Page View: Index - IP: 192.168.20.3
+2025-12-05 16:16:25,376 - INFO - Page View: Index - IP: 192.168.20.3
+2025-12-05 16:16:25,392 - INFO - Page View: Index - IP: 192.168.20.3
