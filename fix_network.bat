@@ -1,0 +1,9 @@
+@echo off
+echo Cleaning up old routes...
+route delete 192.168.60.0
+echo Adding Secondary IP Address...
+netsh interface ip add address "Wi-Fi" 192.168.60.50 255.255.255.0
+echo Verifying...
+ipconfig | findstr "192.168.60"
+echo Done! Try pinging 192.168.60.1 now.
+pause

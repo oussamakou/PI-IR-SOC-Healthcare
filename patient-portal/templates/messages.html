@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCare+ | Messages</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1.5rem;
+            height: 80vh;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            overflow-y: auto;
+        }
+
+        .chat-area {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: #38bdf8;
+            text-decoration: none;
+        }
+
+        /* Message List */
+        .msg-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .msg-item:hover,
+        .msg-item.active {
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .msg-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .msg-preview {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .msg-time {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: normal;
+        }
+
+        .badge {
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Chat */
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: rgba(15, 23, 42, 0.3);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            max-width: 70%;
+        }
+
+        .message.received {
+            margin-right: auto;
+        }
+
+        .message.sent {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            display: inline-block;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+        }
+
+        .received .bubble {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-bottom-left-radius: 2px;
+        }
+
+        .sent .bubble {
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        input {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 10px;
+            color: white;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: #38bdf8;
+            border: none;
+            border-radius: 10px;
+            color: #0f172a;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/dashboard" class="back-link">← Home</a>
+    <div class="container">
+        <div class="sidebar">
+            <div class="msg-item active">
+                <div class="msg-name">Dr. Sarah Johnson <span class="badge">2</span></div>
+                <div class="msg-preview">Please schedule a follow-up for next week...</div>
+            </div>
+            <div class="msg-item">
+                <div class="msg-name">Results Notification <span class="msg-time">Dec 10</span></div>
+                <div class="msg-preview">Your lipid panel results are ready to view.</div>
+            </div>
+            <div class="msg-item">
+                <div class="msg-name">Admin Support <span class="msg-time">Nov 28</span></div>
+                <div class="msg-preview">Welcome to the new MedCare+ portal!</div>
+            </div>
+        </div>
+        <div class="chat-area">
+            <div class="chat-header">
+                <div>
+                    <strong>Dr. Sarah Johnson</strong>
+                    <div style="font-size: 0.75rem; color: #22c55e;">● Online</div>
+                </div>
+                <div style="font-size: 1.25rem;">👩‍⚕️</div>
+            </div>
+            <div class="chat-body">
+                <div class="message received">
+                    <div class="bubble">Hi John, just reviewing your latest vitals. Everything looks stable.</div>
+                </div>
+                <div class="message sent">
+                    <div class="bubble">That's great news, thank you Doctor!</div>
+                </div>
+                <div class="message received">
+                    <div class="bubble">I did notice your cholesterol is slightly elevated. Let's discuss diet changes
+                        at our next appointment.</div>
+                </div>
+                <div class="message received">
+                    <div class="bubble">Please schedule a follow-up for next week if possible.</div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type a secure message...">
+                <button>Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

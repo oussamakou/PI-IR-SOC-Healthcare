@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCare+ | Medical Records</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+        }
+
+        .back-link {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+
+        .warning-banner {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .warning-banner span {
+            font-size: 1.5rem;
+        }
+
+        .warning-banner p {
+            color: #fca5a5;
+            font-size: 0.875rem;
+        }
+
+        .section {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .info-item {}
+
+        .info-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-weight: 500;
+        }
+
+        .condition-list {
+            list-style: none;
+        }
+
+        .condition-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .condition-item:last-child {
+            border-bottom: none;
+        }
+
+        .condition-name {
+            font-weight: 500;
+        }
+
+        .condition-date {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .allergy-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 20px;
+            color: #f87171;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .immunization-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .immunization-row:last-child {
+            border-bottom: none;
+        }
+
+        .immunization-name {
+            font-weight: 500;
+        }
+
+        .immunization-date {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .immunization-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        .immunization-status.current {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .immunization-status.due {
+            background: rgba(251, 146, 60, 0.1);
+            color: #fb923c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>📋 Medical Records</h1>
+                <p style="color: #64748b;">Your complete health history</p>
+            </div>
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+
+        <div class="warning-banner">
+            <span>🔒</span>
+            <p><strong>Protected Health Information (PHI)</strong> - This page contains sensitive medical data protected
+                under HIPAA regulations. Access is logged for security purposes.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">👤 Patient Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Full Name</div>
+                    <div class="info-value">{{ username|default('John Doe') }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Date of Birth</div>
+                    <div class="info-value">March 15, 1985</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Blood Type</div>
+                    <div class="info-value">O+</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Primary Care Physician</div>
+                    <div class="info-value">Dr. Sarah Johnson</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Insurance Provider</div>
+                    <div class="info-value">BlueCross BlueShield</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Member ID</div>
+                    <div class="info-value">XYZ123456789</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">⚠️ Allergies</h3>
+            <div>
+                <span class="allergy-tag">🚫 Penicillin</span>
+                <span class="allergy-tag">🚫 Sulfa Drugs</span>
+                <span class="allergy-tag">🚫 Shellfish</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">🩺 Medical Conditions</h3>
+            <ul class="condition-list">
+                <li class="condition-item">
+                    <div>
+                        <div class="condition-name">Hypertension (High Blood Pressure)</div>
+                        <div class="condition-date">Diagnosed: January 2023</div>
+                    </div>
+                    <span style="color: #22c55e;">Controlled</span>
+                </li>
+                <li class="condition-item">
+                    <div>
+                        <div class="condition-name">Type 2 Diabetes</div>
+                        <div class="condition-date">Diagnosed: September 2024</div>
+                    </div>
+                    <span style="color: #22c55e;">Managed</span>
+                </li>
+                <li class="condition-item">
+                    <div>
+                        <div class="condition-name">Hyperlipidemia (High Cholesterol)</div>
+                        <div class="condition-date">Diagnosed: December 2025</div>
+                    </div>
+                    <span style="color: #fb923c;">Monitoring</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">💉 Immunizations</h3>
+            <div class="immunization-row">
+                <div>
+                    <div class="immunization-name">COVID-19 Vaccine (Bivalent Booster)</div>
+                    <div class="immunization-date">October 2024</div>
+                </div>
+                <span class="immunization-status current">Up to Date</span>
+            </div>
+            <div class="immunization-row">
+                <div>
+                    <div class="immunization-name">Influenza (Flu Shot)</div>
+                    <div class="immunization-date">November 2025</div>
+                </div>
+                <span class="immunization-status current">Up to Date</span>
+            </div>
+            <div class="immunization-row">
+                <div>
+                    <div class="immunization-name">Tdap (Tetanus, Diphtheria, Pertussis)</div>
+                    <div class="immunization-date">March 2020</div>
+                </div>
+                <span class="immunization-status due">Due 2030</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

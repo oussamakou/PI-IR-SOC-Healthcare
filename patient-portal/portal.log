@@ -60,3 +60,32 @@
 2025-12-05 16:15:57,278 - INFO - Page View: Index - IP: 192.168.20.3
 2025-12-05 16:16:25,376 - INFO - Page View: Index - IP: 192.168.20.3
 2025-12-05 16:16:25,392 - INFO - Page View: Index - IP: 192.168.20.3
+2025-12-08 11:31:12,071 - INFO - Page View: Index - IP: 192.168.20.2
+2025-12-08 11:31:12,092 - INFO - Page View: Index - IP: 192.168.20.2
+2025-12-16 05:28:37,937 - INFO - Page View: Index - IP: 172.30.0.3
+2025-12-16 05:29:55,311 - INFO - Page View: Index - IP: 172.30.0.3
+2025-12-16 05:32:44,614 - INFO - Login Attempt - User: patient - IP: 172.30.0.3
+2025-12-16 05:32:44,615 - INFO - Login Success: Patient User - IP: 172.30.0.3
+2025-12-16 05:32:44,753 - INFO - Page View: Dashboard - IP: 172.30.0.3
+2025-12-16 05:33:44,785 - INFO - Appointment Scheduled - Date: 2025-12-11 - Reason: mridh - IP: 172.30.0.3
+2025-12-16 05:36:09,343 - INFO - Page View: Index - IP: 172.30.0.3
+2025-12-16 05:36:17,599 - INFO - Login Attempt - User: patient - IP: 172.30.0.3
+2025-12-16 05:36:17,600 - INFO - Login Success: Patient User - IP: 172.30.0.3
+2025-12-16 05:36:17,741 - INFO - Page View: Dashboard - IP: 172.30.0.3
+2025-12-16 05:36:25,489 - INFO - Appointment Scheduled - Date: 2025-12-18 - Reason: dzadaz - IP: 172.30.0.3
+2025-12-16 05:37:07,802 - INFO - Appointment Scheduled - Date: 2025-12-18 - Reason: ' OR 1=1 -- - IP: 172.30.0.3
+2025-12-16 05:37:24,406 - INFO - Appointment Scheduled - Date: 2025-12-18 - Reason: ' UNION SELECT username, password FROM users -- - IP: 172.30.0.3
+2025-12-16 05:37:35,618 - INFO - Page View: Index - IP: 172.30.0.3
+2025-12-16 05:45:54,021 - INFO - [MedCare+] - Page View: Index - IP: 172.30.0.3 - User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb
+2025-12-16 05:45:54,154 - INFO - [MedCare+] - Page View: Login - IP: 172.30.0.3
+2025-12-16 05:46:38,669 - INFO - [MedCare+] - Page View: Index - IP: 172.30.0.3 - User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:146.0) 
+2025-12-16 05:46:38,811 - INFO - [MedCare+] - Page View: Login - IP: 172.30.0.3
+2025-12-16 05:46:39,302 - WARNING - [MedCare+] - 404 Not Found - Path: /favicon.ico - IP: 172.30.0.3
+2025-12-16 05:46:49,655 - INFO - [MedCare+] - Login Attempt - User: patient - IP: 172.30.0.3 - User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb
+2025-12-16 05:46:49,656 - INFO - [MedCare+] - Login Success - User: patient - Role: Patient - IP: 172.30.0.3
+2025-12-16 05:46:49,863 - INFO - [MedCare+] - Page View: Dashboard - User: patient - IP: 172.30.0.3
+2025-12-16 05:47:07,877 - INFO - [MedCare+] - Login Attempt - User: patient - IP: 172.30.0.3 - User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:146.0) 
+2025-12-16 05:47:07,878 - INFO - [MedCare+] - Login Success - User: patient - Role: Patient - IP: 172.30.0.3
+2025-12-16 05:47:08,017 - INFO - [MedCare+] - Page View: Dashboard - User: patient - IP: 172.30.0.3
+2025-12-16 05:52:25,430 - INFO - [MedCare+ Secure] - Login Attempt - User: admin - IP: 172.30.0.1 - User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb
+2025-12-16 05:52:25,431 - INFO - [MedCare+ Secure] - LOGIN SUCCESS - User: admin - Role: Administrator - IP: 172.30.0.1

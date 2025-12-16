@@ -1,1 +1,4 @@
 flask
+flask-talisman
+flask-limiter
+flask-wtf

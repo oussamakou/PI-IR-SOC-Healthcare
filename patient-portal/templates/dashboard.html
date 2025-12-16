@@ -1,53 +1,858 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Patient Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCare+ | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background: #0f172a;
+            color: #f8fafc;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            border-right: 1px solid rgba(148, 163, 184, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #38bdf8;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #475569;
+            margin-bottom: 0.75rem;
+            padding-left: 0.75rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 0.25rem;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(56, 189, 248, 0.1);
+            color: #f8fafc;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .nav-icon {
+            font-size: 1.25rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: #ef4444;
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+        }
+
+        .user-card {
+            margin-top: auto;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .user-role {
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+
+        .logout-btn {
+            padding: 0.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
+            color: #f87171;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 280px;
             padding: 2rem;
+            min-height: 100vh;
         }
 
         .header {
-            background-color: #1a73e8;
-            color: white;
-            padding: 1rem;
-            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
         }
 
-        .content {
-            margin-top: 2rem;
+        .greeting h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .greeting p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .header-btn {
+            padding: 0.75rem 1.25rem;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 10px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .header-btn:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.3);
+            color: #f8fafc;
+        }
+
+        .header-btn.primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+            border: none;
+            color: white;
+        }
+
+        .header-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(56, 189, 248, 0.5);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            transform: translate(30%, -30%);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon.blue {
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .stat-icon.green {
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .stat-icon.purple {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .stat-icon.orange {
+            background: rgba(251, 146, 60, 0.1);
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .stat-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .stat-change.positive {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .stat-change.neutral {
+            background: rgba(148, 163, 184, 0.1);
+            color: #94a3b8;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
         }
 
         .card {
-            border: 1px solid #ddd;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .card-action {
+            color: #38bdf8;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* Appointments Table */
+        .appointments-table {
+            width: 100%;
+        }
+
+        .appointment-row {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .appointment-row:last-child {
+            border-bottom: none;
+        }
+
+        .appointment-date {
+            width: 60px;
+            height: 60px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .appointment-date .day {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .appointment-date .month {
+            font-size: 0.625rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .appointment-info {
+            flex: 1;
+        }
+
+        .appointment-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .appointment-doctor {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .appointment-time {
+            text-align: right;
+        }
+
+        .appointment-time .time {
+            font-weight: 600;
+            color: #f8fafc;
+        }
+
+        .appointment-time .status {
+            font-size: 0.75rem;
+            color: #22c55e;
+        }
+
+        /* Lab Results */
+        .lab-item {
+            display: flex;
+            align-items: center;
             padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .lab-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .lab-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .lab-info {
+            flex: 1;
+        }
+
+        .lab-name {
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .lab-date {
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+
+        .lab-status {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .lab-status.normal {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .lab-status.review {
+            background: rgba(251, 146, 60, 0.1);
+            color: #fb923c;
+        }
+
+        /* Vitals */
+        .vitals-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .vital-item {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .vital-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .vital-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.125rem;
+        }
+
+        .vital-label {
+            color: #64748b;
+            font-size: 0.625rem;
+            text-transform: uppercase;
+        }
+
+        /* Schedule Appointment Form */
+        .schedule-form {
+            margin-top: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 10px;
+            color: #f8fafc;
+            font-size: 0.875rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #38bdf8;
+        }
+
+        .form-input::placeholder {
+            color: #475569;
+        }
+
+        .schedule-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .schedule-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-card,
+        .card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .stat-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .stat-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .stat-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .stat-card:nth-child(4) {
+            animation-delay: 0.4s;
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <h1>Welcome to Your Health Dashboard</h1>
-    </div>
-    <div class="content">
-        <div class="card">
-            <h3>Upcoming Appointments</h3>
-            <p>No upcoming appointments.</p>
-            <form action="/appointment" method="POST">
-                <input type="date" name="date">
-                <input type="text" name="reason" placeholder="Reason for visit">
-                <button>Schedule</button>
-            </form>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🏥</div>
+            <div class="logo-text">MedCare<span>+</span></div>
         </div>
-        <div class="card">
-            <h3>Recent Lab Results</h3>
-            <p><a href="#">Blood Work - 2025-11-20</a></p>
+
+        <div class="nav-section">
+            <div class="nav-section-title">Main Menu</div>
+            <a href="/dashboard" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                Dashboard
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📅</span>
+                Appointments
+                <span class="nav-badge">2</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">🧪</span>
+                Lab Results
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">💊</span>
+                Prescriptions
+            </a>
         </div>
-    </div>
+
+        <div class="nav-section">
+            <div class="nav-section-title">Health Records</div>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📋</span>
+                Medical History
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">💉</span>
+                Immunizations
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📁</span>
+                Documents
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-section-title">Support</div>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">💬</span>
+                Messages
+                <span class="nav-badge">3</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                Settings
+            </a>
+        </div>
+
+        <div class="user-card">
+            <div class="user-avatar">{{ username[0]|upper if username else 'P' }}</div>
+            <div class="user-info">
+                <div class="user-name">{{ username|default('Patient') }}</div>
+                <div class="user-role">Patient Account</div>
+            </div>
+            <a href="/login" class="logout-btn" title="Logout">🚪</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="header">
+            <div class="greeting">
+                <h1>Good {{ 'Morning' if hour < 12 else ('Afternoon' if hour < 18 else 'Evening' ) }}, {{
+                        username|default('Patient') }}! 👋</h1>
+                        <p>Here's an overview of your health dashboard</p>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">
+                    <span>🔔</span> Notifications
+                </button>
+                <button class="header-btn primary"
+                    onclick="document.getElementById('schedule-modal').scrollIntoView({behavior: 'smooth'})">
+                    <span>➕</span> New Appointment
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue">📅</div>
+                <div class="stat-label">Upcoming Appointments</div>
+                <div class="stat-value">2</div>
+                <span class="stat-change positive">↑ Next: Dec 20</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">🧪</div>
+                <div class="stat-label">Pending Lab Results</div>
+                <div class="stat-value">1</div>
+                <span class="stat-change neutral">Processing...</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple">💊</div>
+                <div class="stat-label">Active Prescriptions</div>
+                <div class="stat-value">3</div>
+                <span class="stat-change positive">All filled</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange">💬</div>
+                <div class="stat-label">Unread Messages</div>
+                <div class="stat-value">3</div>
+                <span class="stat-change positive">From Dr. Smith</span>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Appointments -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Upcoming Appointments</h3>
+                    <a href="#" class="card-action">View All →</a>
+                </div>
+                <div class="appointments-table">
+                    <div class="appointment-row">
+                        <div class="appointment-date">
+                            <span class="day">20</span>
+                            <span class="month">Dec</span>
+                        </div>
+                        <div class="appointment-info">
+                            <div class="appointment-title">Annual Physical Exam</div>
+                            <div class="appointment-doctor">Dr. Sarah Johnson • General Medicine</div>
+                        </div>
+                        <div class="appointment-time">
+                            <div class="time">10:30 AM</div>
+                            <div class="status">✓ Confirmed</div>
+                        </div>
+                    </div>
+                    <div class="appointment-row">
+                        <div class="appointment-date">
+                            <span class="day">28</span>
+                            <span class="month">Dec</span>
+                        </div>
+                        <div class="appointment-info">
+                            <div class="appointment-title">Follow-up Consultation</div>
+                            <div class="appointment-doctor">Dr. Michael Chen • Cardiology</div>
+                        </div>
+                        <div class="appointment-time">
+                            <div class="time">2:00 PM</div>
+                            <div class="status">✓ Confirmed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schedule Form -->
+                <div id="schedule-modal" class="schedule-form">
+                    <h4 style="margin-bottom: 1rem; color: #94a3b8; font-size: 0.875rem;">Schedule New Appointment</h4>
+                    <form action="/appointment" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <div class="form-row">
+                            <input type="date" name="date" class="form-input" required>
+                            <input type="text" name="reason" class="form-input" placeholder="Reason for visit" required>
+                        </div>
+                        <button type="submit" class="schedule-btn">📅 Schedule Appointment</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Lab Results -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Lab Results</h3>
+                        <a href="#" class="card-action">View All →</a>
+                    </div>
+                    <div class="lab-item">
+                        <div class="lab-icon">🩸</div>
+                        <div class="lab-info">
+                            <div class="lab-name">Complete Blood Count</div>
+                            <div class="lab-date">Dec 10, 2025</div>
+                        </div>
+                        <span class="lab-status normal">Normal</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="lab-icon">🧬</div>
+                        <div class="lab-info">
+                            <div class="lab-name">Lipid Panel</div>
+                            <div class="lab-date">Dec 10, 2025</div>
+                        </div>
+                        <span class="lab-status review">Review</span>
+                    </div>
+                    <div class="lab-item">
+                        <div class="lab-icon">💧</div>
+                        <div class="lab-info">
+                            <div class="lab-name">Metabolic Panel</div>
+                            <div class="lab-date">Nov 28, 2025</div>
+                        </div>
+                        <span class="lab-status normal">Normal</span>
+                    </div>
+                </div>
+
+                <!-- Vitals -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Latest Vitals</h3>
+                        <span style="color: #64748b; font-size: 0.75rem;">Dec 10, 2025</span>
+                    </div>
+                    <div class="vitals-grid">
+                        <div class="vital-item">
+                            <div class="vital-icon">❤️</div>
+                            <div class="vital-value">72</div>
+                            <div class="vital-label">Heart Rate (BPM)</div>
+                        </div>
+                        <div class="vital-item">
+                            <div class="vital-icon">🩺</div>
+                            <div class="vital-value">120/80</div>
+                            <div class="vital-label">Blood Pressure</div>
+                        </div>
+                        <div class="vital-item">
+                            <div class="vital-icon">🌡️</div>
+                            <div class="vital-value">98.6°F</div>
+                            <div class="vital-label">Temperature</div>
+                        </div>
+                        <div class="vital-item">
+                            <div class="vital-icon">⚖️</div>
+                            <div class="vital-value">165 lbs</div>
+                            <div class="vital-label">Weight</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Get current hour for greeting
+        const hour = new Date().getHours();
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCare+ | Lab Results</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+        }
+
+        .back-link {
+            color: #38bdf8;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .result-type {
+            color: #64748b;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .result-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .result-date {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status.normal {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .status.review {
+            background: rgba(251, 146, 60, 0.1);
+            color: #fb923c;
+        }
+
+        .status.critical {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .metrics {
+            margin-top: 1rem;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-name {
+            color: #94a3b8;
+        }
+
+        .metric-value {
+            font-weight: 600;
+        }
+
+        .metric-range {
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>🧪 Lab Results</h1>
+                <p style="color: #64748b;">View your recent laboratory test results</p>
+            </div>
+            <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-header">
+                    <div>
+                        <div class="result-type">Blood Test</div>
+                        <div class="result-name">Complete Blood Count (CBC)</div>
+                        <div class="result-date">December 10, 2025</div>
+                    </div>
+                    <span class="status normal">Normal</span>
+                </div>
+                <div class="metrics">
+                    <div class="metric">
+                        <span class="metric-name">White Blood Cells (WBC)</span>
+                        <div>
+                            <span class="metric-value">7.2 K/uL</span>
+                            <div class="metric-range">Normal: 4.5-11.0</div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">Red Blood Cells (RBC)</span>
+                        <div>
+                            <span class="metric-value">5.1 M/uL</span>
+                            <div class="metric-range">Normal: 4.5-5.5</div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-name">Hemoglobin</span>
+                        <div>
+                            <span class="metric-value">14.8 g/dL</span>
+                            <div class="metric-range">Normal: 13.5-17.5</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-header">
+                    <div>
+                        <div class="result-type">Cholesterol Panel</div>
+                        <div class="result-name">Lipid Panel</div>
+                        <div class="result-date">December 10, 2025</div>
+                    </div>
+                    <span class="status review">Review</span>
+                </div>
+                <div class="metrics">
+                    <div class="metric">
+                        <span class="metric-name">Total Cholesterol</span>
+                        <div>
+                            <span class="metric-value" style="color: #fb923c;">215 mg/dL</span>
+                            <div class="metric-range">Desirable: <200< /div>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-name">HDL (Good)</span>
+                            <div>
+                                <span class="metric-value">58 mg/dL</span>
+                                <div class="metric-range">Optimal: >60</div>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-name">LDL (Bad)</span>
+                            <div>
+                                <span class="metric-value" style="color: #fb923c;">142 mg/dL</span>
+                                <div class="metric-range">Optimal: <100< /div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-header">
+                            <div>
+                                <div class="result-type">Metabolic</div>
+                                <div class="result-name">Comprehensive Metabolic Panel</div>
+                                <div class="result-date">November 28, 2025</div>
+                            </div>
+                            <span class="status normal">Normal</span>
+                        </div>
+                        <div class="metrics">
+                            <div class="metric">
+                                <span class="metric-name">Glucose</span>
+                                <div>
+                                    <span class="metric-value">95 mg/dL</span>
+                                    <div class="metric-range">Normal: 70-100</div>
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-name">Creatinine</span>
+                                <div>
+                                    <span class="metric-value">1.0 mg/dL</span>
+                                    <div class="metric-range">Normal: 0.7-1.3</div>
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-name">Sodium</span>
+                                <div>
+                                    <span class="metric-value">140 mEq/L</span>
+                                    <div class="metric-range">Normal: 136-145</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body>
+
+</html>

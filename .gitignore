@@ -1,31 +1,53 @@
-# Sensitive
-.env
-*.key
-*.crt
-*.pem
-secrets/
+# Terraform State
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+
+# ML Models
+ml-detection/models/*.pkl
+ml-detection/models/*.h5
+ml-detection/models/*.joblib
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Logs
+*.log
+logs/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
-# Python
-__pycache__/
-*.pyc
-venv/
-env/
-.pytest_cache/
+# OS
+.DS_Store
+Thumbs.db
 
-# Docker
-docker-compose.old.yml
-docker-compose.override.yml
-velociraptor-data/
-velociraptor-logs/
-openemr-data/
-openemr-logs/
-openemr-db/
-orthanc-data/
-orthanc-logs/
+# Secrets
+*.pem
+*.key
+*.crt
+secrets/
+.env.local
 
-# Logs
-*.log
+# Kubernetes
+kubeconfig
+*.kubeconfig

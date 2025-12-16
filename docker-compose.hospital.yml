@@ -18,7 +18,8 @@ services:
       - openemr_data:/var/www/localhost/htdocs
       - openemr_logs:/var/log/openemr
     networks:
-      - hospitalnet
+      hospitalnet:
+        ipv4_address: 192.168.60.10
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 30s
@@ -37,7 +38,8 @@ services:
     volumes:
       - openemr_db:/var/lib/mysql
     networks:
-      - hospitalnet
+      hospitalnet:
+        ipv4_address: 192.168.60.12
     restart: unless-stopped
 
   # Orthanc PACS
@@ -56,23 +58,24 @@ services:
       - orthanc_data:/var/lib/orthanc/db
       - orthanc_logs:/var/log/orthanc
     networks:
-      - hospitalnet
+      hospitalnet:
+        ipv4_address: 192.168.60.11
     restart: unless-stopped
 
   # Velociraptor EDR Server (Commented out per user request)
-  #velociraptor:
-  #  image: wlambert/velociraptor:latest
-  #  container_name: velociraptor-server
-  #  ports:
-  #    - "8888:8000"  # GUI
-  #    - "8001:8001"  # Frontend
-  #  volumes:
-  #    - ./velociraptor-config/server.config.yaml:/velociraptor/server.config.yaml
-  #    - velociraptor_data:/data
-  #    - velociraptor_logs:/logs
-  #  networks:
-  #    - hospitalnet
-  #  restart: unless-stopped
+  # velociraptor:
+  #   image: wlambert/velociraptor:latest
+  #   container_name: velociraptor-server
+  #   ports:
+  #     - "8888:8000"  # GUI
+  #     - "8001:8001"  # Frontend
+  #   volumes:
+  #     - ./velociraptor-config/server.config.yaml:/velociraptor/server.config.yaml
+  #     - velociraptor_data:/data
+  #     - velociraptor_logs:/logs
+  #   networks:
+  #     - hospitalnet
+  #   restart: unless-stopped
 
 volumes:
   openemr_db:
@@ -80,8 +83,8 @@ volumes:
   openemr_logs:
   orthanc_data:
   orthanc_logs:
-  velociraptor_data:
-  velociraptor_logs:
+  # velociraptor_data:
+  # velociraptor_logs:
 
 networks:
   hospitalnet:
@@ -89,5 +92,6 @@ networks:
     ipam:
       config:
         - subnet: 192.168.60.0/24
+          gateway: 192.168.60.254
     driver_opts:
       com.docker.network.bridge.name: br-hospital
