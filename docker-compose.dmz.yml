@@ -27,6 +27,19 @@ services:
       - patient-portal
     restart: unless-stopped
 
+  # Ngrok Tunnel (Public Access)
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok-dmz
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    command: "http nginx-dmz:80"
+    networks:
+      - dmz_net
+    depends_on:
+      - nginx-dmz
+    restart: unless-stopped
+
 networks:
   dmz_net:
     driver: bridge
