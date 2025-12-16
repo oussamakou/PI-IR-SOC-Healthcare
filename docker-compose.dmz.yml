@@ -33,9 +33,8 @@ services:
     container_name: ngrok-dmz
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
-    command: "http nginx-dmz:80"
-    networks:
-      - dmz_net
+    command: "http localhost:8088 --log=stdout"
+    network_mode: "host"
     depends_on:
       - nginx-dmz
     restart: unless-stopped
@@ -43,9 +42,8 @@ services:
 networks:
   dmz_net:
     driver: bridge
-    internal: true
     ipam:
       config:
-        - subnet: 172.20.0.0/24
+        - subnet: 172.30.0.0/24
     driver_opts:
       com.docker.network.bridge.name: br-dmz
