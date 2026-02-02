@@ -33,8 +33,9 @@ services:
     container_name: ngrok-dmz
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
-    command: "http localhost:8088 --log=stdout"
-    network_mode: "host"
+    command: "http nginx-dmz:80 --log=stdout"
+    networks:
+      - dmz_net
     depends_on:
       - nginx-dmz
     restart: unless-stopped

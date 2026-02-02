@@ -89,3 +89,12 @@
 2025-12-16 05:47:08,017 - INFO - [MedCare+] - Page View: Dashboard - User: patient - IP: 172.30.0.3
 2025-12-16 05:52:25,430 - INFO - [MedCare+ Secure] - Login Attempt - User: admin - IP: 172.30.0.1 - User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb
 2025-12-16 05:52:25,431 - INFO - [MedCare+ Secure] - LOGIN SUCCESS - User: admin - Role: Administrator - IP: 172.30.0.1
+2025-12-16 05:55:53,779 - INFO - [flask_wtf.csrf] - The CSRF tokens do not match.
+2025-12-16 05:56:27,516 - INFO - [MedCare+ Secure] - Login Attempt - User: patient - IP: 172.30.0.1 - User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb
+2025-12-16 05:56:27,517 - INFO - [MedCare+ Secure] - LOGIN SUCCESS - User: patient - Role: Patient - IP: 172.30.0.1
+2025-12-16 06:22:50,538 - INFO - [MedCare+ Secure] - Login Attempt - User: patient - IP: 172.30.0.1 - User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb
+2025-12-16 06:22:50,539 - INFO - [MedCare+ Secure] - LOGIN SUCCESS - User: patient - Role: Patient - IP: 172.30.0.1
+2025-12-16 10:12:13,698 - INFO - [MedCare+ Secure] - Login Attempt - User: patient - IP: 172.30.0.1 - User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb
+2025-12-16 10:12:13,699 - INFO - [MedCare+ Secure] - LOGIN SUCCESS - User: patient - Role: Patient - IP: 172.30.0.1
+2025-12-16 10:18:55,940 - INFO - [MedCare+ Secure] - Login Attempt - User: patient - IP: 172.30.0.1 - User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb
+2025-12-16 10:18:55,941 - INFO - [MedCare+ Secure] - LOGIN SUCCESS - User: patient - Role: Patient - IP: 172.30.0.1
